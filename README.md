@@ -43,3 +43,6 @@ If you want to use something sorter than `source ~/.bashrc` open `wsl` and type:
 ```bash
 echo "alias sb='source ~/.bashrc'" >> ~/.bashrc && source ~/.bashrc
 ```
+
+This way if you have the wsl terminal open you can reload it to see changes from a modified .`bashrc` by simply typing `sb`
+
