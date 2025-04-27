@@ -3,30 +3,31 @@ import tkinter as tk
 from tkinter import messagebox
 
 def run_pipeline():
-    # Select text editor
-    text_editor = text_editor_type_var.get()
-
-    # Command to open bashrc based on text editor
-    command = f"{text_editor} ~/.bashrc"
-
+       
     try:
-        subprocess.run(["wsl", "bash", "-c", command], check=True) 
+        # Run wslpath -w ~/.bashrc to get the Windows path of .bashrc
+        bashrc_path = subprocess.check_output(["wsl", "wslpath", "-w", "~/.bashrc"]).decode("utf-8").strip()
 
+        # Now open it with Sublime Text
+        command = f"subl.exe {bashrc_path}"
+        subprocess.run(command, shell=True, creationflags=subprocess.CREATE_NO_WINDOW)
+
+    # Error hadling
     except subprocess.CalledProcessError as e:
         app.after(0, lambda: messagebox.showerror("Error", str(e)))
 
 # Set up tkinter app
 app = tk.Tk()
-app.title("basrc modifier")
+app.title("bashrc modifier")
 
-# Fasta text_editor_type selection
-tk.Label(app, text="Command line text editor to open bashrc:").grid(row=0, column=0, padx=10, pady=10, sticky="e")
-text_editor_type_var = tk.StringVar(value="micro")
-text_editor_type_options = ["micro", "vim","nvim"]
-text_editor_type_dropdown = tk.OptionMenu(app, text_editor_type_var, *text_editor_type_options)
-text_editor_type_dropdown.grid(row=0, column=1, padx=10, pady=10, sticky="w")
+# Set the window size (width x height)
+app.geometry("270x50")
 
-# Start button
-tk.Button(app, text="Run program", command=run_pipeline).grid(row=1, column=1, padx=10, pady=20)
+# Configure the grid to center the button
+app.grid_rowconfigure(0, weight=1)  # Allow the row to expand
+app.grid_columnconfigure(0, weight=1)  # Allow the column to expand
+
+# Start button, using sticky to center it
+tk.Button(app, text="Run program", command=run_pipeline).grid(row=0, column=0, padx=20, pady=10, sticky="nsew")
 
 app.mainloop()
