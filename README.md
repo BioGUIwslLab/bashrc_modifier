@@ -14,7 +14,7 @@ This app allows the user to open the .bashrc file safely without having to manua
 - In the search bar type `control panel`
 - Open `control panel` and type `env` in the top right search bar
 ![](img/1.png)
-- Click `Edit enviromental variable from your account`
+- Click `Edit enviromental variables from your account`
 - At the top panel click `New` if you don't have a `Path` enviromental variable else click `Edit`
 - Add `Path` in the variable name if it doesn't exist and click `Browse Directory` or `Browse` if you clicked to `Edit` the `Path` variable
 - Select the folder you previously decompressed
