@@ -2,15 +2,13 @@ import subprocess
 import tkinter as tk
 from tkinter import messagebox
 
-def run_pipeline():
-       
+def run_pipeline():  
     try:
-        # Run wslpath -w ~/.bashrc to get the Windows path of .bashrc
-        bashrc_path = subprocess.check_output(["wsl", "wslpath", "-w", "~/.bashrc"], creationflags=subprocess.CREATE_NO_WINDOW).decode("utf-8").strip()
+        # Open .bashrc using Sublime Text
+        command = f"wsl --cd ~ subl.exe .bashrc"
 
-        # Now open it with Sublime Text
-        command = f"subl.exe {bashrc_path}"
-        subprocess.run(command, shell=True, creationflags=subprocess.CREATE_NO_WINDOW)
+        # Run command without creating a cmd.exe window
+        subprocess.run(command, check=True, creationflags=subprocess.CREATE_NO_WINDOW)
 
     # Error hadling
     except subprocess.CalledProcessError as e:
